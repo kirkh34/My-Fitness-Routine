@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewRoutine"></activity>
+        <activity android:name=".AddExercise"></activity>
+        <activity android:name=".CreateRoutine" />
+        <activity android:name=".Help" />
+        <activity android:name=".CreateExercise" />
+        <activity android:name=".ViewRoutine" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

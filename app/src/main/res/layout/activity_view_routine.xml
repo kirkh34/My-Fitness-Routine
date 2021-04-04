@@ -9,9 +9,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRoutine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:padding="4dp"
-        tools:listitem="@layout/exercise_card_view"/>
+        tools:listitem="@layout/exercise_card_view" />
+
+    <Button
+        android:id="@+id/startRoutine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/recyclerViewRoutine"
+        android:text="Start Routine" />
+
+    <Button
+        android:id="@+id/addExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerViewRoutine"
+        android:layout_toRightOf="@id/startRoutine"
+        android:text="Add Exercise" />
 
 </RelativeLayout>

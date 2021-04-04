@@ -1,25 +1,18 @@
 package com.example.myfitnessroutine
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
-import com.example.myfitnessroutine.data.RoutineRepository
 
 
 class MainActivity : AppCompatActivity(),
@@ -76,8 +69,21 @@ MainRecyclerAdapter.RoutineItemListener{
 //                )
 //            }
         })
-
-
+        val btnCreateRoutine = findViewById<Button>(R.id.createRoutine)
+        btnCreateRoutine.setOnClickListener{
+            val intent = Intent(this, CreateRoutine::class.java)
+            startActivity(intent)
+        }
+        val btnCreateExercise = findViewById<Button>(R.id.createExercise)
+        btnCreateExercise.setOnClickListener{
+            val intent = Intent(this, CreateExercise::class.java)
+            startActivity(intent)
+        }
+        val btnHelp = findViewById<Button>(R.id.help)
+        btnHelp.setOnClickListener{
+            val intent = Intent(this, Help::class.java)
+            startActivity(intent)
+        }
 
         /*
         val routine = Routine("First Workout",1000)

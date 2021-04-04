@@ -4,13 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.Observer
+import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
-import kotlinx.android.synthetic.main.activity_view_routine.*
 
 class ViewRoutine : AppCompatActivity() {
 
@@ -36,5 +34,15 @@ class ViewRoutine : AppCompatActivity() {
         //old stuff
         //val name = getIntent().getStringExtra("name")
         Log.i("getIntent","Result: ${routine?.name}")
+
+        val btnStartRoutine = findViewById<Button>(R.id.startRoutine)
+        btnStartRoutine.setOnClickListener{
+
+        }
+        val btnAddExercise = findViewById<Button>(R.id.addExercise)
+        btnAddExercise.setOnClickListener{
+            val intent = Intent(this, AddExercise::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -9,9 +9,32 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:padding="4dp"
         tools:listitem="@layout/card_view"/>
 
+    <Button
+        android:id="@+id/createRoutine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerView"
+        android:layout_marginLeft="4dp"
+        android:text="Create Routine" />
+
+    <Button
+        android:id="@+id/createExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerView"
+        android:layout_toRightOf="@id/createRoutine"
+        android:text="Create Exercise" />
+
+    <Button
+        android:id="@+id/help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerView"
+        android:layout_toRightOf="@id/createExercise"
+        android:text="Help" />
 </RelativeLayout>
