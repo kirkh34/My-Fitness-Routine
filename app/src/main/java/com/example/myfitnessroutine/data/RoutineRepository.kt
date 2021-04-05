@@ -1,6 +1,7 @@
 package com.example.myfitnessroutine.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.myfitnessroutine.utilities.FileHelper
 import com.squareup.moshi.JsonAdapter
@@ -12,14 +13,14 @@ class RoutineRepository(val app: Application) {
 
     val routineData = MutableLiveData<List<Routine>>()
     val exerciseData = MutableLiveData<List<Exercise>>()
-    var staticExerciseData : List<Exercise> = emptyList()
+    var staticExerciseData : MutableList<Exercise> = mutableListOf()
 
 
     private val listTypeR = Types.newParameterizedType(
         List::class.java, Routine::class.java
     )
     private val listTypeE = Types.newParameterizedType(
-        List::class.java, Exercise::class.java
+        MutableList::class.java, Exercise::class.java
     )
 
 
@@ -41,6 +42,7 @@ class RoutineRepository(val app: Application) {
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val adapter: JsonAdapter<List<Exercise>> = moshi.adapter(listTypeE)
         exerciseData.value = adapter.fromJson(text) ?: emptyList()
-        staticExerciseData =  adapter.fromJson(text) ?: emptyList()
+        staticExerciseData =  adapter.fromJson(text) as MutableList<Exercise>? ?: mutableListOf()
     }
+
 }

@@ -13,6 +13,7 @@ import com.example.myfitnessroutine.data.Exercise
 class AddExercise : AppCompatActivity(),
     ExerciseRecyclerAdapter.ExerciseItemListener{
 
+
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
 
@@ -24,14 +25,10 @@ class AddExercise : AppCompatActivity(),
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.exerciseData.observe(this, Observer {
+            Log.i("observe", "${it}")
             val adapter = ExerciseRecyclerAdapter(this, it,this)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(this)
-//            for (routine in it){
-//                Log.i("loopList",
-//                    "${routine.routineName} : ${routine.time}"
-//                )
-//            }
         })
     }
 

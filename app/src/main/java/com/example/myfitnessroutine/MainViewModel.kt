@@ -28,4 +28,5 @@ class MainViewModel(app: Application): AndroidViewModel(app) {
         }
         return result
     }
+
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
-import com.example.myfitnessroutine.data.Routine
 
 class ExerciseRecyclerAdapter(
     val context: Context,

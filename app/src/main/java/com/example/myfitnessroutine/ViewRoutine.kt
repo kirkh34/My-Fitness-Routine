@@ -21,7 +21,6 @@ class ViewRoutine : AppCompatActivity() {
 
         val routine = intent.getSerializableExtra("routineExercises") as? Routine
         val routineExIds = routine?.exercises
-        var exIds : List<String> = listOf("a5nbo03","b7al034")
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         var list = routineExIds?.let { viewModel.buildExList(it) }
         Log.i("list","Result: ${list}")
