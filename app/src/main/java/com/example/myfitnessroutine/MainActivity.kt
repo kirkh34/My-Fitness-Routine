@@ -2,23 +2,22 @@ package com.example.myfitnessroutine
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
+import com.example.myfitnessroutine.data.RoutineRepository
 
 
 class MainActivity : AppCompatActivity(),
 MainRecyclerAdapter.RoutineItemListener{
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
 
 
@@ -42,33 +41,46 @@ MainRecyclerAdapter.RoutineItemListener{
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        recyclerView = findViewById(R.id.recyclerView)
+        val dataRepo = RoutineRepository(application)
+
+        var exercises = dataRepo.exerciseData
+        var routines = dataRepo.routineData
+
+        val adapter = MainRecyclerAdapter(this, routines, exercises, this)
+        adapter.notifyDataSetChanged()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        Log.i("log","onResume ran")
+        Log.i("log","${routines}")
+
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //clear cache
+        //applicationContext.cacheDir.deleteRecursively()
 
-        var exData : List<Exercise> = listOf()
-
-
-        //Log.i("exData", exData.toString())
+        val viewModel: MainViewModel by viewModels()
         recyclerView = findViewById(R.id.recyclerView)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        viewModel.exerciseData.observe(this, Observer {
-            exData = it
-        })
+        val dataRepo = RoutineRepository(application)
+
+        var exercises = dataRepo.exerciseData
+        var routines = dataRepo.routineData
+
+        val adapter = MainRecyclerAdapter(this, routines, exercises, this)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-        viewModel.routineData.observe(this, Observer {
-            val adapter = MainRecyclerAdapter(this, it, exData, this)
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(this)
-//            for (routine in it){
-//                Log.i("loopList",
-//                    "${routine.routineName} : ${routine.time}"
-//                )
-//            }
-        })
         val btnCreateRoutine = findViewById<Button>(R.id.createRoutine)
         btnCreateRoutine.setOnClickListener{
             val intent = Intent(this, CreateRoutine::class.java)
@@ -82,7 +94,9 @@ MainRecyclerAdapter.RoutineItemListener{
         val btnHelp = findViewById<Button>(R.id.help)
         btnHelp.setOnClickListener{
             val intent = Intent(this, Help::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            Log.i("log","${routines}")
+
         }
 
         /*
@@ -116,7 +130,7 @@ MainRecyclerAdapter.RoutineItemListener{
     }
 
     override fun onRoutineItemClick(routine: Routine) {
-       // Log.i("click","Routine Name: ${routine.name}")
+            Log.i("click","Routine Name: ${routine}")
         val intent = Intent(this, ViewRoutine::class.java)
         intent.putExtra("routineExercises", routine);
         startActivity(intent)

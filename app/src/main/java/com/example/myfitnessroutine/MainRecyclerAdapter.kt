@@ -12,9 +12,9 @@ import com.example.myfitnessroutine.data.Routine
 
 class MainRecyclerAdapter(
     val context: Context,
-    val routines: List<Routine>,
-    val exercises: List<Exercise>,
-    val itemListener: RoutineItemListener
+    val routines: MutableList<Routine>,
+    val exercises: MutableList<Exercise>,
+    val itemListener: MainActivity
 
 ) : RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
 
