@@ -3,33 +3,30 @@ package com.example.myfitnessroutine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
-import com.example.myfitnessroutine.data.RoutineRepository
+import com.example.myfitnessroutine.data.DataRepository
 
 class ViewRoutine : AppCompatActivity() {
 
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dataRepo : RoutineRepository
+    private lateinit var dataRepo : DataRepository
     private lateinit var adapter : RoutineRecyclerAdapter
     private lateinit var routineList : MutableList<Routine>
     private lateinit var exerciseList : MutableList<Exercise>
 
-
-
-    private lateinit var routine: Routine
-    private lateinit var routineID: String
-    private lateinit var routineExerciseIds: MutableList<String>
-    private lateinit var routineExerciseList: MutableList<Exercise>
+    private lateinit var routineID : String
+    private lateinit var selectedRoutineExerciseList: MutableList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_routine)
+
+        routineID = intent.getStringExtra("routineID").toString()
 
         initRepo()
 
@@ -37,15 +34,9 @@ class ViewRoutine : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
+        selectedRoutineExerciseList = dataRepo.buildRoutineExerciseList(routineID)
 
-        routine = intent.getSerializableExtra("routineExercises") as Routine
-        routineID = routine.id
-        routine = dataRepo.getRoutine(routineID)!!
-        routineExerciseIds = routine.exercises
-        routineExerciseList = dataRepo.buildExerciseList(routineExerciseIds)
-
-
-        adapter = RoutineRecyclerAdapter(routineExerciseList)
+        adapter = RoutineRecyclerAdapter(selectedRoutineExerciseList)
         recyclerView.adapter = adapter
 
 
@@ -65,18 +56,16 @@ class ViewRoutine : AppCompatActivity() {
         super.onResume()
         initRepo()
 
-        routine = dataRepo.getRoutine(routineID)!!
-        routineExerciseIds = routine.exercises
-        routineExerciseList = dataRepo.buildExerciseList(routineExerciseIds)
-        adapter.setItems(routineExerciseList)
+        adapter.setItems(selectedRoutineExerciseList)
         adapter.notifyDataSetChanged()
 
     }
 
     private fun initRepo(){
-        dataRepo = RoutineRepository(application)
+        dataRepo = DataRepository(application)
         routineList = dataRepo.routineData
         exerciseList = dataRepo.exerciseData
+        selectedRoutineExerciseList = dataRepo.buildRoutineExerciseList(routineID)
     }
 
 }

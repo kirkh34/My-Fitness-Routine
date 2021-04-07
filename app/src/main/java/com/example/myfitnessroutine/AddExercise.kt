@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
-import com.example.myfitnessroutine.data.RoutineRepository
+import com.example.myfitnessroutine.data.DataRepository
 
 class AddExercise : AppCompatActivity(),
     ExerciseRecyclerAdapter.ExerciseItemListener{
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter : ExerciseRecyclerAdapter
-    private lateinit var dataRepo : RoutineRepository
+    private lateinit var dataRepo : DataRepository
     private lateinit var routineList : MutableList<Routine>
     private lateinit var exerciseList : MutableList<Exercise>
 
@@ -45,7 +45,7 @@ class AddExercise : AppCompatActivity(),
     }
 
     private fun initRepo(){
-        dataRepo = RoutineRepository(application)
+        dataRepo = DataRepository(application)
         routineList = dataRepo.routineData
         exerciseList = dataRepo.exerciseData
     }

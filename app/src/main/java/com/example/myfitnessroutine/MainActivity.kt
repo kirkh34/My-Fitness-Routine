@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
-import com.example.myfitnessroutine.data.RoutineRepository
+import com.example.myfitnessroutine.data.DataRepository
 
 
 class MainActivity : AppCompatActivity(),
 MainRecyclerAdapter.RoutineItemListener{
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dataRepo : RoutineRepository
+    private lateinit var dataRepo : DataRepository
     private lateinit var adapter : MainRecyclerAdapter
     private lateinit var routineList : MutableList<Routine>
     private lateinit var exerciseList : MutableList<Exercise>
@@ -48,12 +48,12 @@ MainRecyclerAdapter.RoutineItemListener{
 
     override fun onRoutineItemClick(routine: Routine) {
         val intent = Intent(this, ViewRoutine::class.java)
-        intent.putExtra("routineExercises", routine);
+        intent.putExtra("routineID", routine.id);
         startActivity(intent)
     }
 
     private fun initRepo(){
-        dataRepo = RoutineRepository(application)
+        dataRepo = DataRepository(application)
         routineList = dataRepo.routineData
         exerciseList = dataRepo.exerciseData
     }
@@ -72,7 +72,7 @@ MainRecyclerAdapter.RoutineItemListener{
         val btnHelp = findViewById<Button>(R.id.help)
         btnHelp.setOnClickListener{
             val intent = Intent(this, Help::class.java)
-            //startActivity(intent)
+            startActivity(intent)
         }
     }
 
