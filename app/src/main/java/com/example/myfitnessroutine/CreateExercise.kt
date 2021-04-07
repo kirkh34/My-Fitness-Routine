@@ -1,34 +1,38 @@
 package com.example.myfitnessroutine
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
 import com.example.myfitnessroutine.data.Exercise
+import com.example.myfitnessroutine.data.Routine
 import com.example.myfitnessroutine.data.RoutineRepository
-import java.util.*
+import com.example.myfitnessroutine.data.uniqueID
 
 class CreateExercise : AppCompatActivity()
 {
-    private lateinit var viewModel: MainViewModel
+    private lateinit var dataRepo : RoutineRepository
+    private lateinit var routineList : MutableList<Routine>
+    private lateinit var exerciseList : MutableList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        val exerciseList = viewModel.exerciseData
-        val uniqueID = UUID.randomUUID().toString()
+        initRepo()
+
         val exercise = Exercise(uniqueID, "Jumping Jacks", 120)
         exerciseList.add(exerciseList.size,exercise)
 
         val btnCreateExercise = findViewById<Button>(R.id.addExercise)
         btnCreateExercise.setOnClickListener{
-            //Log.i("create", "exercise created: ${.name}")
-            viewModel.updateExerciseData(exerciseList)
+            dataRepo.saveExerciseData(exerciseList)
         }
 
+    }
+
+    private fun initRepo(){
+        dataRepo = RoutineRepository(application)
+        routineList = dataRepo.routineData
+        exerciseList = dataRepo.exerciseData
     }
 }

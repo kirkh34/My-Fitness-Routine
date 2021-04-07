@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
 
-class RoutineRecyclerAdapter(private val exercises: List<Exercise>) : RecyclerView.Adapter<RoutineRecyclerAdapter.ViewHolder>() {
+class RoutineRecyclerAdapter(private var exercises: MutableList<Exercise>) : RecyclerView.Adapter<RoutineRecyclerAdapter.ViewHolder>() {
 
     override fun getItemCount() = exercises.size
 
@@ -30,5 +30,7 @@ class RoutineRecyclerAdapter(private val exercises: List<Exercise>) : RecyclerVi
         val timeText = itemView.findViewById<TextView>(R.id.txtExerciseTime)
     }
 
-
+    fun setItems(exercise: MutableList<Exercise>) {
+        this.exercises = exercise
+    }
 }

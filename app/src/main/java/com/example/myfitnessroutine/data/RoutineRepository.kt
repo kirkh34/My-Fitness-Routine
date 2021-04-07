@@ -12,7 +12,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 class RoutineRepository(val app: Application) {
 
     var routineData : MutableList<Routine> = mutableListOf()
-    //val exerciseData = MutableLiveData<List<Exercise>>()
     var exerciseData : MutableList<Exercise> = mutableListOf()
 
 
@@ -28,26 +27,29 @@ class RoutineRepository(val app: Application) {
     init {
         readRoutineData()
         readExerciseData()
-        //Log.i("log", "${exerciseData.value}")
     }
 
-    /*
-    fun getRoutineData(){
-        val text = FileHelper.getTextFromAssets(app, "routines.json")
-        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        val adapter: JsonAdapter<List<Routine>> = moshi.adapter(listTypeR)
-        routineData.value = adapter.fromJson(text) ?: emptyList()
+    fun getRoutine(routineID: String): Routine? {
+        routineData.forEach {
+            if(it.id == routineID){
+                return it
+            }
+        }
+        return null
     }
 
-    fun getExerciseData(){
-        val text = FileHelper.getTextFromAssets(app, "exercises.json")
-        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        val adapter: JsonAdapter<List<Exercise>> = moshi.adapter(listTypeE)
-        //exerciseData.value = adapter.fromJson(text) ?: emptyList()
-        //staticExerciseData =  adapter.fromJson(text) as MutableList<Exercise>? ?: mutableListOf()
+    fun buildExerciseList(exIdList: MutableList<String>) : MutableList<Exercise>{
+        val result = mutableListOf<Exercise>()
+        exIdList.forEach { exId ->
+            Log.i("loop id","${exId}")
+            exerciseData.forEach{
+                if(it.id == exId){
+                    result.add(it)
+                }
+            }
+        }
+        return result
     }
-
-     */
 
     fun readRoutineData() {
         val json = FileHelper.readTextFile(app, "routines.json")

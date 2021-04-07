@@ -12,8 +12,8 @@ import com.example.myfitnessroutine.data.Routine
 
 class MainRecyclerAdapter(
     val context: Context,
-    val routines: MutableList<Routine>,
-    val exercises: MutableList<Exercise>,
+    var routines: MutableList<Routine>,
+    var exercises: MutableList<Exercise>,
     val itemListener: MainActivity
 
 ) : RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
@@ -75,5 +75,10 @@ class MainRecyclerAdapter(
         fun onRoutineItemClick(routine: Routine)
     }
 
+    fun setItems(routine: MutableList<Routine>, exercises: MutableList<Exercise>) {
+        this.routines = routine
+        this.exercises = exercises
+
+    }
 
 }

@@ -5,44 +5,54 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfitnessroutine.data.Exercise
 import com.example.myfitnessroutine.data.Routine
 import com.example.myfitnessroutine.data.RoutineRepository
 
 class ViewRoutine : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataRepo : RoutineRepository
+    private lateinit var adapter : RoutineRecyclerAdapter
+    private lateinit var routineList : MutableList<Routine>
+    private lateinit var exerciseList : MutableList<Exercise>
+
+
+
+    private lateinit var routine: Routine
+    private lateinit var routineID: String
+    private lateinit var routineExerciseIds: MutableList<String>
+    private lateinit var routineExerciseList: MutableList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_routine)
-        dataRepo = RoutineRepository(application)
 
-        val routine = intent.getSerializableExtra("routineExercises") as? Routine
-        var routineID = routine?.id
-        val routineExIds = routine?.exercises
-        Log.i("routineExIds","Result: ${routineExIds}")
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        var list = routineExIds?.let { viewModel.buildExList(it) }
-        Log.i("list","Result: ${list}")
+        initRepo()
 
         recyclerView = findViewById(R.id.recyclerViewRoutine)
-        recyclerView.adapter = list?.let { RoutineRecyclerAdapter(it) }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
-        //old stuff
-        //val name = getIntent().getStringExtra("name")
-        Log.i("getIntent","Result: ${routine?.name}")
+
+        routine = intent.getSerializableExtra("routineExercises") as Routine
+        routineID = routine.id
+        routine = dataRepo.getRoutine(routineID)!!
+        routineExerciseIds = routine.exercises
+        routineExerciseList = dataRepo.buildExerciseList(routineExerciseIds)
+
+
+        adapter = RoutineRecyclerAdapter(routineExerciseList)
+        recyclerView.adapter = adapter
+
 
         val btnStartRoutine = findViewById<Button>(R.id.startRoutine)
         btnStartRoutine.setOnClickListener{
-
         }
+
         val btnAddExercise = findViewById<Button>(R.id.addExercise)
         btnAddExercise.setOnClickListener{
             val intent = Intent(this, AddExercise::class.java)
@@ -53,20 +63,20 @@ class ViewRoutine : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        initRepo()
 
-        recyclerView = findViewById(R.id.recyclerViewRoutine)
-        val dataRepo = RoutineRepository(application)
-
-        val routine = intent.getSerializableExtra("routineExercises") as? Routine
-        var routineID = routine?.id
-        val routineExIds = routine?.exercises
-        var list = routineExIds?.let { viewModel.buildExList(it) }
-        var exercises = dataRepo.exerciseData
-        var routines = dataRepo.routineData
-        recyclerView.adapter?.notifyDataSetChanged()
-        recyclerView.adapter = list?.let { RoutineRecyclerAdapter(it) }
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
+        routine = dataRepo.getRoutine(routineID)!!
+        routineExerciseIds = routine.exercises
+        routineExerciseList = dataRepo.buildExerciseList(routineExerciseIds)
+        adapter.setItems(routineExerciseList)
+        adapter.notifyDataSetChanged()
 
     }
+
+    private fun initRepo(){
+        dataRepo = RoutineRepository(application)
+        routineList = dataRepo.routineData
+        exerciseList = dataRepo.exerciseData
+    }
+
 }
