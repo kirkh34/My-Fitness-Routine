@@ -23,7 +23,7 @@ class CreateExercise : AppCompatActivity()
         val exercise = Exercise(uniqueID, "Jumping Jacks", 120)
         exerciseList.add(exerciseList.size,exercise)
 
-        val btnCreateExercise = findViewById<Button>(R.id.addExercise)
+        val btnCreateExercise = findViewById<Button>(R.id.createExercise)
         btnCreateExercise.setOnClickListener{
             dataRepo.saveExerciseData(exerciseList)
         }
