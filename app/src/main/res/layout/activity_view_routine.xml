@@ -30,4 +30,12 @@
         android:layout_toRightOf="@id/startRoutine"
         android:text="Add Exercise" />
 
+    <Button
+        android:id="@+id/viewRoutineGoBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerViewRoutine"
+        android:layout_toRightOf="@id/addExercise"
+        android:text="Go Back" />
+
 </RelativeLayout>

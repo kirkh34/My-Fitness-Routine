@@ -42,6 +42,7 @@ class AddExercise : AppCompatActivity(),
             }
         }
         dataRepo.saveRoutineData(routineList)
+        this.finish()
     }
 
     private fun initRepo(){

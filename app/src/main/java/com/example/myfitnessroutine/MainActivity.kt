@@ -26,7 +26,7 @@ MainRecyclerAdapter.RoutineItemListener{
         initRepo()
 
         //clear cache
-        applicationContext.cacheDir.deleteRecursively()
+        //applicationContext.cacheDir.deleteRecursively()
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -54,6 +54,7 @@ MainRecyclerAdapter.RoutineItemListener{
 
     private fun initRepo(){
         dataRepo = DataRepository(application)
+        dataRepo.insertDemoData()
         routineList = dataRepo.routineData
         exerciseList = dataRepo.exerciseData
     }

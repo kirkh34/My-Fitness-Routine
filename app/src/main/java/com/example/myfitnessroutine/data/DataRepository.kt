@@ -23,8 +23,24 @@ class DataRepository(val app: Application) {
 
 
     init {
+        //insertDemoData()
         readRoutineData()
         readExerciseData()
+    }
+
+
+    fun insertDemoData(){
+        if(routineData.isEmpty()) {
+            var demoExercise = Exercise("0000", "Demo Exercise", 30)
+            var demoExerciseList: MutableList<Exercise> = mutableListOf()
+            demoExerciseList.add(demoExercise)
+            saveExerciseData(demoExerciseList)
+
+            var demoRoutine = Routine("1111", "Demo Routine", mutableListOf("0000"))
+            var demoRoutineList: MutableList<Routine> = mutableListOf()
+            demoRoutineList.add(demoRoutine)
+            saveRoutineData(demoRoutineList)
+        }
     }
 
     fun getRoutine(routineID: String): Routine? {

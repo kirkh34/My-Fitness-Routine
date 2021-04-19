@@ -3,6 +3,7 @@ package com.example.myfitnessroutine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,14 +51,20 @@ class ViewRoutine : AppCompatActivity() {
             intent.putExtra("routineID", routineID);
             startActivity(intent)
         }
+
+        val btnViewRoutineGoBack = findViewById<Button>(R.id.viewRoutineGoBack)
+        btnViewRoutineGoBack.setOnClickListener{
+            this.finish()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         initRepo()
-
         adapter.setItems(selectedRoutineExerciseList)
         adapter.notifyDataSetChanged()
+
+        Log.i("exercises", selectedRoutineExerciseList.toString())
 
     }
 
