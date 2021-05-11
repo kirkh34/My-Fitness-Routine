@@ -11,7 +11,7 @@ import com.example.myfitnessroutine.data.Exercise
 
 class ExerciseRecyclerAdapter(
     val context: Context,
-    val exercises: List<Exercise>,
+    var exercises: List<Exercise>,
     val itemListener: ExerciseItemListener
 
 ) : RecyclerView.Adapter<ExerciseRecyclerAdapter.ViewHolder>() {
@@ -53,5 +53,7 @@ class ExerciseRecyclerAdapter(
         fun onExerciseItemClick(exercise: Exercise)
     }
 
-
+    fun setItems(exercise: MutableList<Exercise>) {
+        this.exercises = exercise
+    }
 }

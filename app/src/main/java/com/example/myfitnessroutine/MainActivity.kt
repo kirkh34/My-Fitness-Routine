@@ -21,12 +21,12 @@ MainRecyclerAdapter.RoutineItemListener{
     private lateinit var exerciseList : MutableList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //clear cache
+        //applicationContext.cacheDir.deleteRecursively()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRepo()
-
-        //clear cache
-        //applicationContext.cacheDir.deleteRecursively()
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -65,11 +65,7 @@ MainRecyclerAdapter.RoutineItemListener{
             val intent = Intent(this, CreateRoutine::class.java)
             startActivity(intent)
         }
-        val btnCreateExercise = findViewById<Button>(R.id.createExercise)
-        btnCreateExercise.setOnClickListener{
-            val intent = Intent(this, CreateExercise::class.java)
-            startActivity(intent)
-        }
+
         val btnHelp = findViewById<Button>(R.id.help)
         btnHelp.setOnClickListener{
             val intent = Intent(this, Help::class.java)

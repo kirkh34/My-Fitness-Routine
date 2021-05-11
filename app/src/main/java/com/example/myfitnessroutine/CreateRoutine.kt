@@ -1,5 +1,6 @@
 package com.example.myfitnessroutine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -25,13 +26,17 @@ class CreateRoutine : AppCompatActivity() {
         val btnCompleteRoutine = findViewById<Button>(R.id.completeRoutine)
         btnCompleteRoutine.setOnClickListener {
 
+            val unique = uniqueID
             routineName = findViewById(R.id.editTextRoutineName)
-            val routine = Routine(uniqueID, routineName.text.toString(), arrayListOf())
+            val routine = Routine(unique, routineName.text.toString(), arrayListOf())
 
             routineList.add(routineList.size, routine)
 
             dataRepo.saveRoutineData((routineList))
-            this.finish()
+
+            val intent = Intent(this, ViewRoutine::class.java)
+            intent.putExtra("routineID", unique);
+            startActivity(intent)
         }
     }
 

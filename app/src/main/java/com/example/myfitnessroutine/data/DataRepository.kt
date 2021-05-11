@@ -31,12 +31,17 @@ class DataRepository(val app: Application) {
 
     fun insertDemoData(){
         if(routineData.isEmpty()) {
-            var demoExercise = Exercise("0000", "Demo Exercise", 30)
+            var crunches = Exercise("3f4ac24f-9cee-4d4e-9799-61f7a1ba7aa2", "Crunches", 30)
+            var planks = Exercise("1e5d3933-5735-459d-8d80-7bf66cfac52a", "Planks", 45)
+            var butterflyKicks = Exercise("1e5d3933-5735-459d-8d80-7bf87cfac52a", "Butterfly Kicks", 60)
+
             var demoExerciseList: MutableList<Exercise> = mutableListOf()
-            demoExerciseList.add(demoExercise)
+            demoExerciseList.add(crunches)
+            demoExerciseList.add(planks)
+            demoExerciseList.add(butterflyKicks)
             saveExerciseData(demoExerciseList)
 
-            var demoRoutine = Routine("1111", "Demo Routine", mutableListOf("0000"))
+            var demoRoutine = Routine("1e5d5266-5735-459d-8d80-7bf87cfac52a", "Ab Workout", mutableListOf("3f4ac24f-9cee-4d4e-9799-61f7a1ba7aa2","1e5d3933-5735-459d-8d80-7bf66cfac52a","1e5d3933-5735-459d-8d80-7bf87cfac52a"))
             var demoRoutineList: MutableList<Routine> = mutableListOf()
             demoRoutineList.add(demoRoutine)
             saveRoutineData(demoRoutineList)

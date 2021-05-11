@@ -1,7 +1,10 @@
 package com.example.myfitnessroutine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitnessroutine.data.Exercise
@@ -28,6 +31,12 @@ class AddExercise : AppCompatActivity(),
 
         adapter = ExerciseRecyclerAdapter(this, exerciseList, this)
         recyclerView.adapter = adapter
+
+        val btnCreateExercise = findViewById<Button>(R.id.createExercise)
+        btnCreateExercise.setOnClickListener{
+            val intent = Intent(this, CreateExercise::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -44,6 +53,15 @@ class AddExercise : AppCompatActivity(),
         dataRepo.saveRoutineData(routineList)
         this.finish()
     }
+
+    override fun onResume() {
+        super.onResume()
+        initRepo()
+        adapter.setItems(exerciseList)
+        adapter.notifyDataSetChanged()
+
+    }
+
 
     private fun initRepo(){
         dataRepo = DataRepository(application)
